@@ -99,7 +99,8 @@ namespace BsnCraft.MemoryTest.Dbl
                     row = new CommandRowViewModel();
                     for pt2 from 1 thru 9
                     begin
-                        xcall CreateButton("ITEM_"+%string(pt1)+"_"+%string(pt2), 
+                        xcall CreateButton(
+                        &    "ITEM_"+%string(pt1)+"_"+%string(pt2), 
                         &    "Item "+%string(pt1)+" "+%string(pt2), 
                         &    obj)
                         row.SetItem(pt2, obj)
