@@ -41,8 +41,8 @@ namespace BsnCraft.MemoryTest.Dbl
         public static viewform ,@ViewForm
         public static model ,@MainViewModel
         public static view ,@MainWindow
-        public static wndid ,i4
-        public static exitapp ,i4
+        public static wndid ,int
+        public static exitapp ,int
 
         public method Init ,void
             endparams
@@ -79,13 +79,51 @@ namespace BsnCraft.MemoryTest.Dbl
             e ,@DotNetObject
             endparams
             record
-                cmd ,@CommandViewModel
+                cmd  ,@CommandViewModel
                 args ,@BsnEventArgs
+                row  ,@CommandRowViewModel
+                obj  ,@CommandViewModel
+                ptr  ,int
+                name ,a3
             endrecord
         proc    
             cmd = (CommandViewModel)sender
             args = (BsnEventArgs)e
-            xcall u_message(cmd.Name)
+            name = cmd.Name
+            case name of
+            begincase
+            "ADD" : begin
+                for ptr from 1 thru 100000
+                begin
+                    row = new CommandRowViewModel();
+                    obj = new CommandViewModel("ITEM1","Item 1")
+                    row.Item1 = obj
+                    obj = new CommandViewModel("ITEM2","Item 2")
+                    row.Item2 = obj
+                    obj = new CommandViewModel("ITEM3","Item 3")
+                    row.Item3 = obj
+                    obj = new CommandViewModel("ITEM4","Item 4")
+                    row.Item4 = obj
+                    obj = new CommandViewModel("ITEM5","Item 5")
+                    row.Item5 = obj
+                    obj = new CommandViewModel("ITEM6","Item 6")
+                    row.Item6 = obj
+                    obj = new CommandViewModel("ITEM7","Item 7")
+                    row.Item7 = obj
+                    obj = new CommandViewModel("ITEM8","Item 8")
+                    row.Item8 = obj
+                    obj = new CommandViewModel("ITEM9","Item 9")
+                    row.Item9 = obj
+                    model.AddItem(row)
+                end
+            end
+            "DEL" : begin
+                model.ClearItems()
+            end
+            "CLS" : begin
+                exitapp = 1
+            end
+            endcase
             mreturn
         endmethod
 

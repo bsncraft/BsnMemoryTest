@@ -14,8 +14,18 @@ namespace BsnCraft.MemoryTest
         public CommandViewModel Remove { get; } 
             = new CommandViewModel("DEL", "Remove Items");
 
-        public ObservableCollection<CommandViewModel> Items { get; } 
-            = new ObservableCollection<CommandViewModel>();
+        public ObservableCollection<CommandRowViewModel> Items { get; } 
+            = new ObservableCollection<CommandRowViewModel>();
+
+        public void AddItem(CommandRowViewModel list)
+        {
+            Items.Add(list);
+        }
+
+        public void ClearItems()
+        {
+            Items.Clear();
+        }
 
         public MainViewModel()
         {

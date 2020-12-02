@@ -13,6 +13,9 @@
                     <DataTemplate DataType="{x:Type local:CommandViewModel}">
                         <local:CommandButton />
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:CommandRowViewModel}">
+                        <local:CommandRow />
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -22,6 +25,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding Items}"></ListView> 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <ContentControl Content="{Binding Path=Add}"></ContentControl>
             <ContentControl Content="{Binding Path=Remove}"></ContentControl>
