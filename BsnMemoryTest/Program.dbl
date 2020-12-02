@@ -1,0 +1,175 @@
+.include DotNet.inc
+import BsnCraft.MemoryTest.Dbl
+
+;;; <summary>
+;;; The main entry point for the application.
+;;; </summary>
+main
+
+    record
+        test        ,@BsnMemoryTest
+        logsts      ,d1
+ 
+        .include "wnd:windows.def"
+        .include "wnd:tools.def"
+
+proc
+    xcall flags (01000000)                  
+    xcall u_start
+        
+    test = new BsnMemoryTest()
+    test.Init()
+                
+    xcall BsnMemoryTest_Resize
+    xcall e_method(d_meth_appsize,"BsnMemoryTest_Resize_Method") 
+    xcall e_method(d_meth_appstate,"BsnMemoryTest_AppState_Method") 
+    xcall e_sect("Memory Test",D_HEADER)
+    while (.not. BsnMemoryTest.exitapp)
+    begin
+        xcall dotnet_tkinput(BsnMemoryTest.wndid)
+    end
+
+    xcall u_finish
+    stop
+endmain
+
+namespace BsnCraft.MemoryTest.Dbl
+
+    public class BsnMemoryTest
+
+        public static viewform      ,@ViewForm
+        public static model         ,@MainViewModel
+        public static view          ,@MainWindow
+        public static wndid         ,i4
+        public static exitapp       ,i4
+
+        public method Init ,void
+            endparams
+        proc
+            try
+            begin                                                
+                exitapp = 0
+                
+                model = new MainViewModel()
+                
+                addhandler(model.BsnEvent,this.CallBack)                       
+                    
+                viewform = new ViewForm()
+                wndid = %dotnet_tkwin("", 0, 0, viewform)
+                    
+                xcall w_proc(wp_state, wndid, wps_maximized)
+                xcall w_brdr(wndid,wb_off)                
+                xcall u_window(d_place, wndid)                   
+                    
+                view = new MainWindow()
+                view.DataContext = model
+                viewform.AddView((@object)view)
+            end
+            catch (e, @Exception)
+            begin
+                xcall u_message('Exception Hit: ' + e.Message + " " + e.stacktrace)
+            end
+            endtry
+            mreturn
+        end
+
+        public method CallBack  ,void
+            sender              ,@DotNetObject
+            e                   ,@DotNetObject
+            endparams
+            record
+                cmd         ,@CommandViewModel
+                args        ,@BsnEventArgs
+                tcnt        ,i4
+        
+        proc    
+            cmd = (CommandViewModel)sender
+            args = (BsnEventArgs)e
+
+            mreturn
+        endmethod
+
+    endclass
+
+endnamespace
+
+.subroutine BsnMemoryTest_Resize
+
+    record
+        wnd_height      ,i4             ;window height
+        wnd_width       ,i4             ;window width
+        group visrect                   ;visible window rectangle
+            left        ,i4
+            top         ,i4
+            right       ,i4
+            bottom      ,i4
+        endgroup
+
+        .include "wnd:tools.def"
+
+.proc
+    xcall u_winmetrics(d_visible_rect, wid_app, visrect)
+    wnd_height = visrect.bottom - visrect.top
+    wnd_width  = visrect.right - visrect.left
+    BsnMemoryTest.viewform.ResizeForm(wnd_width, wnd_height+2)
+    xreturn
+.end
+
+.function BsnMemoryTest_AppState_Method, ^VAL
+
+    a_res1				,a
+    a_res2				,a
+    ^val(a_wndid)		,i
+    ^val(a_event)		,i
+
+.proc
+    if (%w_info(wif_state,wid_container) .ne. wps_minimized)
+    begin
+        xcall m_signal("ENTRY")
+        xcall BsnMemoryTest_Resize
+    end
+    freturn true
+.end
+
+.function BsnMemoryTest_Resize_Method, ^VAL
+    a_columns	,n
+    a_rows		,n
+    a_width		,n	;Pixels
+    a_height	,n	;Pixels
+
+    .include "wnd:tools.def"
+
+    record
+        fl_update   ,d1
+
+    record  wk_pos        
+        wk_cols     ,d10
+        wk_rows     ,d10
+        wk_width    ,d10
+        wk_height   ,d10
+        wk_dummy    ,d10        
+        
+    record  wk_pos2        
+        wk_cols2    ,d10
+        wk_rows2    ,d10
+        wk_width2   ,d10
+        wk_height2  ,d10
+        wk_dummy2   ,d10
+        
+.proc    
+    wk_cols = a_columns
+    wk_rows = a_rows
+    wk_width = a_width
+    wk_height = a_height    
+    
+    fl_update =
+    if (wk_cols .gt. (wk_cols2 + 10)) .or. (wk_cols .lt. (wk_cols2 - 10)) fl_update = true
+    if (wk_rows .gt. (wk_rows2 + 10)) .or. (wk_rows .lt. (wk_rows2 - 10)) fl_update = true
+    
+    if (fl_update)
+    begin
+        xcall m_signal("ENTRY")
+        xcall BsnMemoryTest_Resize
+    end
+    freturn true
+.end
