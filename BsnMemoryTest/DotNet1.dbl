@@ -13235,6 +13235,19 @@ namespace BsnCraft.MemoryTest
 		
 		endmethod
 		
+		public method SetItem, void
+		p__id, int
+		p__item, @object
+		
+		endparams
+		proc
+			begin
+				(void)parent.Call("SetItem",p__id,p__item)
+				
+			end
+		
+		endmethod
+		
 		public method OnBsnEvent, void
 		p__sender, @object
 		p__e, @BsnCraft.MemoryTest.BsnEventArgs
@@ -13838,6 +13851,22 @@ namespace BsnCraft.MemoryTest
 				begin
 				data tmp, @BsnCraft.MemoryTest.CommandViewModel
 				parent.GetProperty("Remove",tmp)
+				tmp.gennet_init_internal_handles()
+				mreturn tmp
+				tmp = new BsnCraft.MemoryTest.CommandViewModel(0, tmp)
+				
+				end
+			
+			endmethod
+		
+		endproperty
+		
+		public  property Close, @BsnCraft.MemoryTest.CommandViewModel
+			Method get
+			proc
+				begin
+				data tmp, @BsnCraft.MemoryTest.CommandViewModel
+				parent.GetProperty("Close",tmp)
 				tmp.gennet_init_internal_handles()
 				mreturn tmp
 				tmp = new BsnCraft.MemoryTest.CommandViewModel(0, tmp)

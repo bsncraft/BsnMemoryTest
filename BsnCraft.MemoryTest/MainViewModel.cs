@@ -13,12 +13,23 @@ namespace BsnCraft.MemoryTest
             = new CommandViewModel("ADD", "Add Items");
         public CommandViewModel Remove { get; } 
             = new CommandViewModel("DEL", "Remove Items");
+        public CommandViewModel Close { get; } 
+            = new CommandViewModel("CLS", "Close");
 
         public ObservableCollection<CommandRowViewModel> Items { get; } 
             = new ObservableCollection<CommandRowViewModel>();
 
         public void AddItem(CommandRowViewModel list)
         {
+            list.Item1.BsnEvent += OnBsnEvent;
+            list.Item2.BsnEvent += OnBsnEvent;
+            list.Item3.BsnEvent += OnBsnEvent;
+            list.Item4.BsnEvent += OnBsnEvent;
+            list.Item5.BsnEvent += OnBsnEvent;
+            list.Item6.BsnEvent += OnBsnEvent;
+            list.Item7.BsnEvent += OnBsnEvent;
+            list.Item8.BsnEvent += OnBsnEvent;
+            list.Item9.BsnEvent += OnBsnEvent;
             Items.Add(list);
         }
 
@@ -31,6 +42,7 @@ namespace BsnCraft.MemoryTest
         {
             Add.BsnEvent += OnBsnEvent;
             Remove.BsnEvent += OnBsnEvent;
+            Close.BsnEvent += OnBsnEvent;
         }
     }
 }

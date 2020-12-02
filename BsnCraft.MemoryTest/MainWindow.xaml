@@ -29,6 +29,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <ContentControl Content="{Binding Path=Add}"></ContentControl>
             <ContentControl Content="{Binding Path=Remove}"></ContentControl>
+            <ContentControl Content="{Binding Path=Close}"></ContentControl>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -49,7 +49,7 @@ namespace BsnCraft.MemoryTest.Dbl
         proc
             try
             begin                                                
-                exitapp = 0
+                BsnMemoryTest.exitapp = 0
                 
                 model = new MainViewModel()
                 
@@ -82,8 +82,9 @@ namespace BsnCraft.MemoryTest.Dbl
                 cmd  ,@CommandViewModel
                 args ,@BsnEventArgs
                 row  ,@CommandRowViewModel
-                obj  ,@CommandViewModel
-                ptr  ,int
+                obj  ,@DotNetObject
+                pt1  ,int
+                pt2  ,int
                 name ,a3
             endrecord
         proc    
@@ -93,27 +94,16 @@ namespace BsnCraft.MemoryTest.Dbl
             case name of
             begincase
             "ADD" : begin
-                for ptr from 1 thru 100000
+                for pt1 from 1 thru 10000
                 begin
                     row = new CommandRowViewModel();
-                    obj = new CommandViewModel("ITEM1","Item 1")
-                    row.Item1 = obj
-                    obj = new CommandViewModel("ITEM2","Item 2")
-                    row.Item2 = obj
-                    obj = new CommandViewModel("ITEM3","Item 3")
-                    row.Item3 = obj
-                    obj = new CommandViewModel("ITEM4","Item 4")
-                    row.Item4 = obj
-                    obj = new CommandViewModel("ITEM5","Item 5")
-                    row.Item5 = obj
-                    obj = new CommandViewModel("ITEM6","Item 6")
-                    row.Item6 = obj
-                    obj = new CommandViewModel("ITEM7","Item 7")
-                    row.Item7 = obj
-                    obj = new CommandViewModel("ITEM8","Item 8")
-                    row.Item8 = obj
-                    obj = new CommandViewModel("ITEM9","Item 9")
-                    row.Item9 = obj
+                    for pt2 from 1 thru 9
+                    begin
+                        xcall CreateButton("ITEM_"+%string(pt1)+"_"+%string(pt2), 
+                        &    "Item "+%string(pt1)+" "+%string(pt2), 
+                        &    obj)
+                        row.SetItem(pt2, obj)
+                    end
                     model.AddItem(row)
                 end
             end
@@ -121,15 +111,33 @@ namespace BsnCraft.MemoryTest.Dbl
                 model.ClearItems()
             end
             "CLS" : begin
-                exitapp = 1
+                BsnMemoryTest.exitapp = 1
+                xcall m_signal("ENTRY")
             end
             endcase
+            else begin
+                xcall u_message(cmd.Name)
+            end
             mreturn
         endmethod
 
     endclass
 
 endnamespace
+
+subroutine CreateButton
+    a_name ,a
+    a_caption ,a
+    a_obj ,@DotNetObject
+    endparams
+    record
+        obj  ,@CommandViewModel
+    endrecord
+proc
+    obj = new CommandViewModel(a_name,a_caption)
+    a_obj = obj
+    xreturn
+endsubroutine
 
 subroutine BsnMemoryTest_Resize
     endparams
