@@ -12,6 +12,12 @@ namespace BsnCraft.MemoryTest
         public string Name { get; set; }
         public string Caption { get; set; }
 
+        public CommandViewModel(string name, string caption)
+        {
+            Name = name;
+            Caption = caption;
+        }
+
         private RelayCommand _cmd;
         public RelayCommand Cmd
         {

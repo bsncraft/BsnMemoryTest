@@ -1,7 +1,6 @@
 Import System
 Import System.Runtime.Serialization
 Import System.Reflection
-Import System.ComponentModel
 Import System.Windows.Media.Animation
 Import System.Windows.Data
 Import System.Windows
@@ -12,16 +11,18 @@ Import System.Windows.Controls
 Import System.Windows.Markup
 Import System.Windows.Media.Effects
 Import System.Windows.Threading
+Import System.ComponentModel
 Import System.Windows.Forms
 Import System.Drawing
 Import System.Runtime.Remoting
 Import System.Windows.Forms.Layout
+Import XamlGeneratedNamespace
 Import BsnCraft.MemoryTest
 Import BsnCraft_MemoryTest__
 Import mscorlib__
-Import System__
 Import PresentationFramework__
 Import PresentationCore__
 Import WindowsBase__
+Import System__
 Import System_Windows_Forms__
 Import System_Drawing__

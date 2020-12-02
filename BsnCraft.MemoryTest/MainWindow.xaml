@@ -6,7 +6,25 @@
              xmlns:local="clr-namespace:BsnCraft.MemoryTest"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="BlueViolet">
-            <Label>Hello World</Label>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type local:CommandViewModel}">
+                        <local:CommandButton />
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <ContentControl Content="{Binding Path=Add}"></ContentControl>
+            <ContentControl Content="{Binding Path=Remove}"></ContentControl>
+        </StackPanel>
     </Grid>
 </UserControl>

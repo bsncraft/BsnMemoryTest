@@ -7,11 +7,12 @@ import BsnCraft.MemoryTest.Dbl
 main
 
     record
-        test        ,@BsnMemoryTest
-        logsts      ,d1
- 
-        .include "wnd:windows.def"
-        .include "wnd:tools.def"
+        test ,@BsnMemoryTest
+        logsts ,d1 
+    endrecord
+
+    .include wnd:windows.def
+    .include wnd:tools.def
 
 proc
     xcall flags (01000000)                  
@@ -37,11 +38,11 @@ namespace BsnCraft.MemoryTest.Dbl
 
     public class BsnMemoryTest
 
-        public static viewform      ,@ViewForm
-        public static model         ,@MainViewModel
-        public static view          ,@MainWindow
-        public static wndid         ,i4
-        public static exitapp       ,i4
+        public static viewform ,@ViewForm
+        public static model ,@MainViewModel
+        public static view ,@MainWindow
+        public static wndid ,i4
+        public static exitapp ,i4
 
         public method Init ,void
             endparams
@@ -73,19 +74,18 @@ namespace BsnCraft.MemoryTest.Dbl
             mreturn
         end
 
-        public method CallBack  ,void
-            sender              ,@DotNetObject
-            e                   ,@DotNetObject
+        public method CallBack ,void
+            sender ,@DotNetObject
+            e ,@DotNetObject
             endparams
             record
-                cmd         ,@CommandViewModel
-                args        ,@BsnEventArgs
-                tcnt        ,i4
-        
+                cmd ,@CommandViewModel
+                args ,@BsnEventArgs
+            endrecord
         proc    
             cmd = (CommandViewModel)sender
             args = (BsnEventArgs)e
-
+            xcall u_message(cmd.Name)
             mreturn
         endmethod
 
@@ -93,54 +93,55 @@ namespace BsnCraft.MemoryTest.Dbl
 
 endnamespace
 
-.subroutine BsnMemoryTest_Resize
-
+subroutine BsnMemoryTest_Resize
+    endparams
     record
-        wnd_height      ,i4             ;window height
-        wnd_width       ,i4             ;window width
-        group visrect                   ;visible window rectangle
-            left        ,i4
-            top         ,i4
-            right       ,i4
-            bottom      ,i4
+        wnd_height  ,i4             ;window height
+        wnd_width   ,i4             ;window width
+        group visrect               ;visible window rectangle
+            left    ,i4
+            top     ,i4
+            right   ,i4
+            bottom  ,i4
         endgroup
+    endrecord
 
-        .include "wnd:tools.def"
-
-.proc
+    .include wnd:tools.def
+proc
     xcall u_winmetrics(d_visible_rect, wid_app, visrect)
     wnd_height = visrect.bottom - visrect.top
     wnd_width  = visrect.right - visrect.left
     BsnMemoryTest.viewform.ResizeForm(wnd_width, wnd_height+2)
     xreturn
-.end
+endsubroutine
 
-.function BsnMemoryTest_AppState_Method, ^VAL
-
-    a_res1				,a
-    a_res2				,a
-    ^val(a_wndid)		,i
-    ^val(a_event)		,i
-
-.proc
+function BsnMemoryTest_AppState_Method ,^val
+    a_res1 ,a
+    a_res2 ,a
+    ^val(a_wndid) ,i
+    ^val(a_event) ,i
+    endparams
+proc
     if (%w_info(wif_state,wid_container) .ne. wps_minimized)
     begin
         xcall m_signal("ENTRY")
         xcall BsnMemoryTest_Resize
     end
     freturn true
-.end
+endfunction
 
-.function BsnMemoryTest_Resize_Method, ^VAL
-    a_columns	,n
-    a_rows		,n
-    a_width		,n	;Pixels
-    a_height	,n	;Pixels
+function BsnMemoryTest_Resize_Method ,^val
+    a_columns ,n
+    a_rows ,n
+    a_width ,n	;Pixels
+    a_height ,n	;Pixels
+    endparams
 
-    .include "wnd:tools.def"
+    .include wnd:tools.def
 
     record
         fl_update   ,d1
+    endrecord
 
     record  wk_pos        
         wk_cols     ,d10
@@ -148,23 +149,25 @@ endnamespace
         wk_width    ,d10
         wk_height   ,d10
         wk_dummy    ,d10        
-        
+    endrecord
+            
     record  wk_pos2        
         wk_cols2    ,d10
         wk_rows2    ,d10
         wk_width2   ,d10
         wk_height2  ,d10
         wk_dummy2   ,d10
-        
-.proc    
+    endrecord
+            
+proc    
     wk_cols = a_columns
     wk_rows = a_rows
     wk_width = a_width
     wk_height = a_height    
     
     fl_update =
-    if (wk_cols .gt. (wk_cols2 + 10)) .or. (wk_cols .lt. (wk_cols2 - 10)) fl_update = true
-    if (wk_rows .gt. (wk_rows2 + 10)) .or. (wk_rows .lt. (wk_rows2 - 10)) fl_update = true
+    if (wk_cols > (wk_cols2 + 10)) || (wk_cols < (wk_cols2 - 10)) fl_update = true
+    if (wk_rows > (wk_rows2 + 10)) || (wk_rows < (wk_rows2 - 10)) fl_update = true
     
     if (fl_update)
     begin
@@ -172,4 +175,4 @@ endnamespace
         xcall BsnMemoryTest_Resize
     end
     freturn true
-.end
+endfunction
