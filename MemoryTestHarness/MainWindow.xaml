@@ -1,0 +1,13 @@
+﻿<Window x:Class="MemoryTestHarness.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:bsn="clr-namespace:BsnCraft.MemoryTest;assembly=BsnCraft.MemoryTest"
+        xmlns:local="clr-namespace:MemoryTestHarness"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <bsn:MainWindow x:Name="Main"></bsn:MainWindow>
+    </Grid>
+</Window>

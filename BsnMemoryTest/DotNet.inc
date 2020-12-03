@@ -12,6 +12,7 @@ Import System.Windows.Markup
 Import System.Windows.Media.Effects
 Import System.Windows.Threading
 Import System.ComponentModel
+Import System.Data
 Import System.Windows.Forms
 Import System.Drawing
 Import System.Runtime.Remoting
@@ -24,5 +25,6 @@ Import PresentationFramework__
 Import PresentationCore__
 Import WindowsBase__
 Import System__
+Import System_Data__
 Import System_Windows_Forms__
 Import System_Drawing__

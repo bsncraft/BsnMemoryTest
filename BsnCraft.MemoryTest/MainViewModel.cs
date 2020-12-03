@@ -1,48 +1,72 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
+using DevExpress.Xpf.Grid.GroupRowLayout;
 
 namespace BsnCraft.MemoryTest
 {
     public class MainViewModel : ViewModelBase
     {
-        public CommandViewModel Add { get; } 
-            = new CommandViewModel("ADD", "Add Items");
-        public CommandViewModel Remove { get; } 
-            = new CommandViewModel("DEL", "Remove Items");
-        public CommandViewModel Close { get; } 
-            = new CommandViewModel("CLS", "Close");
+        public CommandViewModel New { get; }
+            = new CommandViewModel("NEW", "New View");
 
-        public ObservableCollection<CommandRowViewModel> Items { get; } 
-            = new ObservableCollection<CommandRowViewModel>();
+        public CommandViewModel Exit { get; }
+            = new CommandViewModel("EXT", "Exit App");
 
-        public void AddItem(CommandRowViewModel list)
+        public ItemsViewModel CurrentView { get; set; }
+
+        public ObservableCollection<ItemsViewModel> Views { get; set; }
+            = new ObservableCollection<ItemsViewModel>();
+
+        public int ViewCount { get; private set; }
+
+        public void AddItems(ArrayList list)
         {
-            list.Item1.BsnEvent += OnBsnEvent;
-            list.Item2.BsnEvent += OnBsnEvent;
-            list.Item3.BsnEvent += OnBsnEvent;
-            list.Item4.BsnEvent += OnBsnEvent;
-            list.Item5.BsnEvent += OnBsnEvent;
-            list.Item6.BsnEvent += OnBsnEvent;
-            list.Item7.BsnEvent += OnBsnEvent;
-            list.Item8.BsnEvent += OnBsnEvent;
-            list.Item9.BsnEvent += OnBsnEvent;
-            Items.Add(list);
+            CurrentView.AddItems(list.Cast<CommandViewModel>().ToList());
         }
 
         public void ClearItems()
         {
-            Items.Clear();
+            CurrentView.ClearItems();
+        }
+
+        public void AddView(ItemsViewModel items)
+        {
+            Views.Add(items);
+            CurrentView = items;
+            CurrentView.BsnEvent += (s, e) =>
+            {
+                if (e.Name.StartsWith("VIEW"))
+                {
+                    CurrentView = (ItemsViewModel) s;
+                    return;
+                }
+                OnBsnEvent(s, e);
+            };
+            ViewCount++;
+        }
+
+        public void CloseView()
+        {
+            Views.Remove(CurrentView);
+            CurrentView = null;
+            CurrentView = Views.FirstOrDefault();
         }
 
         public MainViewModel()
         {
-            Add.BsnEvent += OnBsnEvent;
-            Remove.BsnEvent += OnBsnEvent;
-            Close.BsnEvent += OnBsnEvent;
+            New.BsnEvent += OnBsnEvent;
+            Exit.BsnEvent += OnBsnEvent;
+            var load = new Windows.Wrapper.BsnWinManager(false, "BsnMemoryTest");
+            AddView(new ItemsViewModel("VIEW1", "View 1"));
         }
     }
 }

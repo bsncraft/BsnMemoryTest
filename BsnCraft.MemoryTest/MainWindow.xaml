@@ -1,35 +1,95 @@
 ﻿<UserControl x:Class="BsnCraft.MemoryTest.MainWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:local="clr-namespace:BsnCraft.MemoryTest"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             dx:ThemeManager.ThemeName="Office2019White"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.Buttons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ListView.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ListBox.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ComboBox.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ContextMenu.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ProgressBar.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.CheckBox.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.Slider.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.TabControl.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Calendar.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.Text.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ControlBox.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
                 <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type local:ItemsViewModel}">
+                        <local:ItemsView />
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type local:CommandViewModel}">
                         <local:CommandButton />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type local:CommandRowViewModel}">
-                        <local:CommandRow />
-                    </DataTemplate>
+                    <Style TargetType="{x:Type dxg:GridColumn}">
+                        <Setter Property="CellTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding Path=Value}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding Items}"></ListView> 
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <ContentControl Content="{Binding Path=Add}"></ContentControl>
-            <ContentControl Content="{Binding Path=Remove}"></ContentControl>
-            <ContentControl Content="{Binding Path=Close}"></ContentControl>
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ItemsControl ItemsSource="{Binding Views}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:CommandButton></local:CommandButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <ContentControl Content="{Binding Path=New}" />
+                <ContentControl Content="{Binding Path=Exit}" />
+            </StackPanel>
+        </Grid>
+        <ContentPresenter Grid.Row="1" Content="{Binding CurrentView}" />
     </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 .include DotNet.inc
 import BsnCraft.MemoryTest.Dbl
+import System.Collections
 
 ;;; <summary>
 ;;; The main entry point for the application.
@@ -81,10 +82,12 @@ namespace BsnCraft.MemoryTest.Dbl
             record
                 cmd  ,@CommandViewModel
                 args ,@BsnEventArgs
-                row  ,@CommandRowViewModel
+                items  ,@Arraylist
+                item  ,@ItemsViewModel
                 obj  ,@DotNetObject
                 pt1  ,int
                 pt2  ,int
+                cnt  ,int
                 name ,a3
             endrecord
         proc    
@@ -96,22 +99,33 @@ namespace BsnCraft.MemoryTest.Dbl
             "ADD" : begin
                 for pt1 from 1 thru 10000
                 begin
-                    row = new CommandRowViewModel();
+                    item = model.CurrentView
+                    items = new Arraylist()
                     for pt2 from 1 thru 9
                     begin
                         xcall CreateButton(
-                        &    "ITEM_"+%string(pt1)+"_"+%string(pt2), 
-                        &    "Item "+%string(pt1)+" "+%string(pt2), 
+                        &    item.Name+"_ITEM_"+%string(pt1)+"_"+%string(pt2), 
+                        &    item.Caption+" Item "+%string(pt1)+" "+%string(pt2), 
                         &    obj)
-                        row.SetItem(pt2, obj)
+                        items.Add(obj)
                     end
-                    model.AddItem(row)
+                    model.AddItems(items)
                 end
+                view.Refresh()
+            end
+            "NEW" : begin
+                cnt = model.ViewCount
+                incr cnt
+                item = new ItemsViewModel("VIEW" + %string(cnt), "View " + %string(cnt))
+                model.AddView(item)
             end
             "DEL" : begin
                 model.ClearItems()
             end
             "CLS" : begin
+                model.CloseView()
+            end
+            "EXT" : begin
                 BsnMemoryTest.exitapp = 1
                 xcall m_signal("ENTRY")
             end

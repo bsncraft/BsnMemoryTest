@@ -17,6 +17,8 @@
     <DBL_qWarnLevel>0</DBL_qWarnLevel>
     <DBL_qRelaxed>True</DBL_qRelaxed>
     <DBL_qRelaxedInterop>True</DBL_qRelaxedInterop>
+    <ProjEnvVars>
+    </ProjEnvVars>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>

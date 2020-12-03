@@ -12,26 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BsnCraft.Windows.Base;
 
-namespace BsnCraft.MemoryTest
+namespace MemoryTestHarness
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : UserControl
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        public void Refresh()
-        {
-            // View.Refresh();
-            // View.UpdateLayout();
-            // Grid.Refresh();
-            // Grid.UpdateLayout();
+            Loaded += (s, e) =>
+            {
+                Main.DataContext = new BsnCraft.MemoryTest.MainViewModel();
+            };
         }
     }
 }

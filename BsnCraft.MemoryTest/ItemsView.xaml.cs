@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BsnCraft.Windows.Base;
 
 namespace BsnCraft.MemoryTest
 {
     /// <summary>
-    /// Interaction logic for CommandRow.xaml
+    /// Interaction logic for ItemsView.xaml
     /// </summary>
-    public partial class CommandRow : UserControl
+    public partial class ItemsView : UserControl
     {
-        public CommandRow()
+        public ItemsView()
         {
             InitializeComponent();
         }
