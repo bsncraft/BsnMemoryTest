@@ -54,9 +54,16 @@ namespace BsnCraft.MemoryTest
             ViewCount++;
         }
 
+        public static void AddMemoryLeak(ref CommandViewModel cmd, string name, string caption)
+        {
+            cmd.Name = name;
+            cmd.Caption = caption;
+        }
+
         public void CloseView()
         {
             Views.Remove(CurrentView);
+            CurrentView.ClearItems();
             CurrentView = null;
             CurrentView = Views.FirstOrDefault();
         }
@@ -65,7 +72,6 @@ namespace BsnCraft.MemoryTest
         {
             New.BsnEvent += OnBsnEvent;
             Exit.BsnEvent += OnBsnEvent;
-            var load = new Windows.Wrapper.BsnWinManager(false, "BsnMemoryTest");
             AddView(new ItemsViewModel("VIEW1", "View 1"));
         }
     }

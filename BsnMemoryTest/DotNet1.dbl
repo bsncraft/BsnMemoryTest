@@ -7656,6 +7656,21 @@ namespace BsnCraft.MemoryTest
 		
 		endmethod
 		
+		public static method AddMemoryLeak, void
+		req inout p__cmd, @BsnCraft.MemoryTest.CommandViewModel
+		p__name, @string
+		p__caption, @string
+		
+		endparams
+		proc
+			begin
+				data classObject, @DotNetObject, (DotNetObject)BsnCraft_MemoryTest__.af_MemoryTest__.Property__
+				(void)classObject.Call("BsnCraft.MemoryTest.MainViewModel.AddMemoryLeak",p__cmd,p__name,p__caption)
+				
+			end
+		
+		endmethod
+		
 		public method CloseView, void
 		endparams
 		proc
@@ -16055,16 +16070,6 @@ namespace BsnCraft.MemoryTest
 			begin
 				data nul, @BsnCraft.MemoryTest.MainWindow
 				mreturn new BsnCraft.MemoryTest.MainWindow(((dotNetObject)convert).SYNNETInternalHandle, nul)
-			end
-		
-		endmethod
-		
-		public method Refresh, void
-		endparams
-		proc
-			begin
-				(void)parent.Call("Refresh")
-				
 			end
 		
 		endmethod

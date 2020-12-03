@@ -53,7 +53,7 @@
     <DebugOptimize>Optimize</DebugOptimize>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DotNet1.dbl" />
+    <Compile Include="DotNet.dbl" />
     <Compile Include="Program.dbl" />
   </ItemGroup>
   <ItemGroup>

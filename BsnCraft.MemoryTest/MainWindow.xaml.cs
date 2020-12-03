@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BsnCraft.Windows.Base;
 
 namespace BsnCraft.MemoryTest
 {
@@ -24,14 +23,6 @@ namespace BsnCraft.MemoryTest
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        public void Refresh()
-        {
-            // View.Refresh();
-            // View.UpdateLayout();
-            // Grid.Refresh();
-            // Grid.UpdateLayout();
         }
     }
 }

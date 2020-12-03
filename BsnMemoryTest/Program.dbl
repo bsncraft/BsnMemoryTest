@@ -97,21 +97,21 @@ namespace BsnCraft.MemoryTest.Dbl
             case name of
             begincase
             "ADD" : begin
-                for pt1 from 1 thru 10000
+                for pt1 from 1 thru 1000
                 begin
                     item = model.CurrentView
                     items = new Arraylist()
                     for pt2 from 1 thru 9
                     begin
-                        xcall CreateButton(
+                        xcall CreateButton(item.Name+"_ITEM_"+%string(pt1)+"_"+%string(pt2), 
+                        &    item.Caption+" Item "+%string(pt1)+" "+%string(pt2), obj)
+                        MainViewModel.AddMemoryLeak((@CommandViewModel)obj,
                         &    item.Name+"_ITEM_"+%string(pt1)+"_"+%string(pt2), 
-                        &    item.Caption+" Item "+%string(pt1)+" "+%string(pt2), 
-                        &    obj)
+                        &    item.Caption+" Item "+%string(pt1)+" "+%string(pt2))
                         items.Add(obj)
                     end
                     model.AddItems(items)
                 end
-                view.Refresh()
             end
             "NEW" : begin
                 cnt = model.ViewCount

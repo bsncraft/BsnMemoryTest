@@ -12,37 +12,6 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.Buttons.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ListView.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ListBox.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ComboBox.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ContextMenu.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ProgressBar.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.CheckBox.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.Slider.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.TabControl.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Calendar.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.Text.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/BsnCraft.Windows.Controls;component/Styles/Controls.ControlBox.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
                 <ResourceDictionary>
                     <DataTemplate DataType="{x:Type local:ItemsViewModel}">
                         <local:ItemsView />
